@@ -7,6 +7,10 @@ on:
   push:
     paths:
       - "**Dockerfile**"
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}      
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,8 +50,11 @@ jobs:
         env:
           CI: true
 
-  Build-and-Push-Docker-Image:
+  build-and-push-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: test
     name: Docker Build, Tag, Push
 
